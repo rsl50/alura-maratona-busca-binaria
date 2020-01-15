@@ -34,7 +34,30 @@ int BuscaBinaria (int x, int n, int v[]) {
 // ==================================================
 // ==================================================
 
-int busca_binaria (int inicio, int fim, int valor, int array[]) {
+int busca_binaria_iterativa (int de, int ate, int valor, int s[]) {
+    while(de < ate){
+        int meio = (de + ate)/2;    
+        if(s[meio] < valor)
+            de = meio + 1;
+        else if(s[meio] == valor)
+            ate = meio;
+        else
+            ate = meio-1;
+    }
+
+    if(de > ate)
+        return -1;
+    else{
+        if(s[de] == valor)
+            return de;
+        else
+            return -1;
+    }
+}
+// ==================================================
+// ==================================================
+
+int busca_binaria_recursiva (int inicio, int fim, int valor, int array[]) {
 	if (inicio > fim) return -1;
 	
 	if (inicio == fim) {
@@ -45,11 +68,11 @@ int busca_binaria (int inicio, int fim, int valor, int array[]) {
 	int meio = (inicio + fim) / 2;
 	
 	if (array[meio] < valor) {
-		return busca_binaria(meio + 1, fim, valor, array);
+		return busca_binaria_recursiva(meio + 1, fim, valor, array);
 	} else if (array[meio] == valor) {
-		return busca_binaria(inicio, meio, valor, array);
+		return busca_binaria_recursiva(inicio, meio, valor, array);
 	} else {
-		return busca_binaria(inicio, meio - 1, valor, array);
+		return busca_binaria_recursiva(inicio, meio - 1, valor, array);
 	}
 }
 
@@ -89,7 +112,8 @@ int main () {
 				int val = strtol(buf, NULL, 10);
 				//printf("%d\n", val);
 				
-				printf("%d\n", busca_binaria(0, n - 1, val, array));
+				printf("%d\n", busca_binaria_recursiva(0, n - 1, val, array));
+				//printf("%d\n", busca_binaria_iterativa(0, n - 1, val, array));
 			}
 		}
 	}
